@@ -1,0 +1,25 @@
+.darkIcon {
+  height: 30px;
+  width: 30px;
+}
+.hamBurgerMenu {
+  height: 28px;
+  width: 28px;
+  margin-left: 10px;
+}
+@media screen and (min-width: 768px) {
+  .hamBurgerMenu {
+    display: none;
+  }
+}
+.logButton {
+  height: 40px;
+  width: 40px;
+  margin-left: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .logButton {
+    display: none;
+  }
+}
