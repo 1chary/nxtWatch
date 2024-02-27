@@ -5,7 +5,9 @@ export const SideBarContainer = styled.div`
   flex-direction: column;
   width: 20%;
   justify-content: space-between;
-  height: 90vh;
+  min-height: 90vh;
+  position: fixed;
+  margin-top: 10vh;
   background-color: ${props =>
     props.sideBarBackgroundColor ? 'black' : 'white'};
   @media screen and (max-width: 767px) {
@@ -23,8 +25,12 @@ export const ListSideElement = styled.li`
   align-items: center;
   font-size: 18px;
   margin-bottom: 20px;
+  border-radius: 5px;
+  width: 70%;
+  height: 40px;
   cursor: pointer;
   color: ${props => (props.sideTextColor ? 'white' : 'black')};
+  background-color: ${props => props.activeTabBg};
 `
 export const ContactUsDetails = styled.div`
   display: flex;

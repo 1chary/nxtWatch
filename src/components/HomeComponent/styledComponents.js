@@ -1,19 +1,16 @@
 import styled from 'styled-components'
 
-export const HomeContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
 export const VideosContainer = styled.div`
   min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 80%;
-
-  background-color: ${props => (props.bgColor ? 'black' : '#f1f1f1')};
+  margin-left: 20%;
+  background-color: ${props => (props.bgColor ? '#181818' : '#f9f9f9 ')};
   @media screen and (max-width: 767px) {
     width: 100%;
+    margin-left: 0px;
   }
 `
 
@@ -21,6 +18,47 @@ export const NxtWatchLogoForPopup = styled.img`
   height: 30px;
   width: 60px;
 `
+export const BannerContainer = styled.div`
+  height: 300px;
+  width: 100%;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
+  display: flex;
+  justify-content: space-between;
+  background-size: cover;
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`
+export const BannerLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+export const HomeNxtWatch = styled.img`
+  height: 50px;
+  width: 250px;
+`
+export const BuyNxtWatch = styled.h1`
+  font-size: 30px;
+  color: grey;
+`
+export const GetItNow = styled.button`
+  height: 30px;
+  width: 200px;
+  border: 1px solid #616e7c;
+  color: #616e7c;
+  background-color: transparent;
+  cursor: pointer;
+`
+export const BannerRight = styled.div`
+  display: flex;
+`
+export const CloseButton = styled.button`
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  outline: none;
+`
+
 export const SearchContainer = styled.div`
   height: 30px;
   width: 50%;
@@ -79,7 +117,12 @@ export const HomeElementButton = styled.button`
 `
 
 export const ImageOfDisplay = styled.img`
-  height: 150px;
+  height: 200px;
+  width: 100%;
+  @media screen and (max-width: 767px) {
+    height: 200px;
+    width: 100%;
+  }
 `
 export const DetailsOfTheVideo = styled.div`
   display: flex;

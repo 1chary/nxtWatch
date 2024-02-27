@@ -1,5 +1,6 @@
 import {FaMoon, FaBars, FaSignInAlt} from 'react-icons/fa'
-import {Link} from 'react-router-dom'
+import Cookies from 'js-cookie'
+import {Link, withRouter} from 'react-router-dom'
 import Popup from 'reactjs-popup'
 import {BsBrightnessHigh} from 'react-icons/bs'
 import DarkThemeContext from '../../context/DarkThemeContext'
@@ -17,9 +18,14 @@ import {
   UnOrderedSideBar,
   ListSideElement,
   LogButtonForSmallDevices,
+  ButtonContainerForLogOut,
+  AreYouSure,
+  ButtonContainer,
+  CancelButton,
+  ConfirmButton,
 } from './styledComponents'
 
-const Header = () => (
+const Header = props => (
   <DarkThemeContext.Consumer>
     {value => {
       const {isDark, onClickChangeMode} = value
@@ -28,13 +34,28 @@ const Header = () => (
         onClickChangeMode()
       }
 
+      const logOut = () => {
+        const {history} = props
+        Cookies.remove('jwt_token')
+        history.replace('/login')
+      }
+
+      const LogOutForLargeDevices = () => {
+        const {history} = props
+        Cookies.remove('jwt_token')
+        history.replace('/login')
+      }
+
       const imageUrl = isDark
         ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
         : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
 
       return (
         <HeaderContainer bgColor={isDark}>
-          <Logo src={imageUrl} alt="website logo" />
+          <Link to="/" className="logo">
+            <Logo src={imageUrl} alt="website logo" />
+          </Link>
+
           <OptionsContainer>
             <ButtonForDarkAndWhite
               data-testid="theme"
@@ -84,14 +105,69 @@ const Header = () => (
                 </UnOrderedSideBar>
               </Popup>
             </PopupContainer>
-            <LogButtonForSmallDevices bgColorForLogOut={isDark}>
-              <FaSignInAlt className="logButton" />
-            </LogButtonForSmallDevices>
-            <LogOutButton buttonStyle={isDark}>Logout</LogOutButton>
+            <Popup
+              modal
+              trigger={
+                <LogButtonForSmallDevices bgColorForLogOut={isDark}>
+                  <FaSignInAlt className="logButton" />
+                </LogButtonForSmallDevices>
+              }
+              className="popup-content"
+            >
+              {close => (
+                <ButtonContainerForLogOut popUpColor={isDark}>
+                  <AreYouSure>Are you sure, you want to logout?</AreYouSure>
+                  <ButtonContainer>
+                    <CancelButton
+                      type="button"
+                      className="trigger-button"
+                      data-testid="closeButton"
+                      onClick={() => close()}
+                    >
+                      Cancel
+                    </CancelButton>
+                    <ConfirmButton onClick={logOut} type="button">
+                      Confirm
+                    </ConfirmButton>
+                  </ButtonContainer>
+                </ButtonContainerForLogOut>
+              )}
+            </Popup>
+            <Popup
+              modal
+              trigger={
+                <LogOutButton buttonStyle={isDark} type="button">
+                  Logout
+                </LogOutButton>
+              }
+              className="popup-content"
+            >
+              {close => (
+                <ButtonContainerForLogOut popUpColor={isDark}>
+                  <AreYouSure>Are you sure you want to logout?</AreYouSure>
+                  <ButtonContainer>
+                    <CancelButton
+                      type="button"
+                      className="trigger-button"
+                      data-testid="closeButton"
+                      onClick={() => close()}
+                    >
+                      Cancel
+                    </CancelButton>
+                    <ConfirmButton
+                      onClick={LogOutForLargeDevices}
+                      type="button"
+                    >
+                      Confirm
+                    </ConfirmButton>
+                  </ButtonContainer>
+                </ButtonContainerForLogOut>
+              )}
+            </Popup>
           </OptionsContainer>
         </HeaderContainer>
       )
     }}
   </DarkThemeContext.Consumer>
 )
-export default Header
+export default withRouter(Header)

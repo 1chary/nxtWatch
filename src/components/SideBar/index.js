@@ -23,31 +23,87 @@ class SideBar extends Component {
     return (
       <DarkThemeContext.Consumer>
         {value => {
-          const {isDark} = value
+          const {isDark, activeTab, changeTab} = value
+          const bgColorOfTab = isDark ? '#475569' : '#cbd5e1'
+
+          const currentHomeTab = () => {
+            changeTab('Home')
+          }
+
+          const currentTrendingTab = () => {
+            changeTab('Trending')
+          }
+
+          const currentGamingTab = () => {
+            changeTab('Gaming')
+          }
+
+          const currentSavedTab = () => {
+            changeTab('Saved Videos')
+          }
+
           return (
             <SideBarContainer sideBarBackgroundColor={isDark}>
               <UnOrderedSideBar>
                 <Link to="/" className="anchorLink">
-                  <ListSideElement sideTextColor={isDark}>
-                    <MdHome className="homeIcon" />
+                  <ListSideElement
+                    sideTextColor={isDark}
+                    key="home"
+                    activeTabBg={activeTab === 'Home' ? bgColorOfTab : 'none'}
+                    onClick={currentHomeTab}
+                  >
+                    <MdHome
+                      className="homeIcon"
+                      color={activeTab === 'Home' ? '#ff0b37' : '#7e858e'}
+                    />
                     Home
                   </ListSideElement>
                 </Link>
                 <Link to="/trending" className="anchorLink">
-                  <ListSideElement sideTextColor={isDark}>
-                    <FaFire className="homeIcon" />
+                  <ListSideElement
+                    sideTextColor={isDark}
+                    key="trending"
+                    activeTabBg={
+                      activeTab === 'Trending' ? bgColorOfTab : 'none'
+                    }
+                    onClick={currentTrendingTab}
+                  >
+                    <FaFire
+                      className="homeIcon"
+                      color={activeTab === 'Trending' ? '#ff0b37' : '#7e858e'}
+                    />
                     Trending
                   </ListSideElement>
                 </Link>
-                <Link to="/gaming" className="anchorLink">
-                  <ListSideElement sideTextColor={isDark}>
-                    <SiYoutubegaming className="homeIcon" />
+                <Link
+                  to="/gaming"
+                  className="anchorLink"
+                  activeTabBg={activeTab === 'Gaming' ? bgColorOfTab : 'none'}
+                  onClick={currentGamingTab}
+                >
+                  <ListSideElement sideTextColor={isDark} key="gaming">
+                    <SiYoutubegaming
+                      className="homeIcon"
+                      color={activeTab === 'Gaming' ? '#ff0b37' : '#7e858e'}
+                    />
                     Gaming
                   </ListSideElement>
                 </Link>
-                <Link to="/saved-videos" className="anchorLink">
-                  <ListSideElement sideTextColor={isDark}>
-                    <FaRegPlusSquare className="homeIcon" />
+                <Link
+                  to="/saved-videos"
+                  className="anchorLink"
+                  activeTabBg={
+                    activeTab === 'Saved Videos' ? bgColorOfTab : 'none'
+                  }
+                  onClick={currentSavedTab}
+                >
+                  <ListSideElement sideTextColor={isDark} key="saved">
+                    <FaRegPlusSquare
+                      className="homeIcon"
+                      color={
+                        activeTab === 'Saved Videos' ? '#ff0b37' : '#7e858e'
+                      }
+                    />
                     Saved videos
                   </ListSideElement>
                 </Link>

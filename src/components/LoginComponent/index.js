@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import {Redirect} from 'react-router-dom'
 import {
   LoginContainer,
   DetailsContainer,
@@ -64,7 +65,7 @@ class LoginComponent extends Component {
 
   onSubmitSuccess = jwtToken => {
     const {history} = this.props
-    Cookies.set('jwt_token', jwtToken, {expiries: 30, path: '/'})
+    Cookies.set('jwt_token', jwtToken, {expires: 30, path: '/'})
     history.replace('/')
   }
 
@@ -91,6 +92,10 @@ class LoginComponent extends Component {
   }
 
   render() {
+    const jwtToken = Cookies.get('jwt_token')
+    if (jwtToken !== undefined) {
+      return <Redirect to="/" />
+    }
     const {errorMessage} = this.state
     return (
       <LoginContainer>
@@ -108,7 +113,7 @@ class LoginComponent extends Component {
               <CheckBox type="checkbox" onClick={this.showPassword} />
               <ShowPassPara>Show Password</ShowPassPara>
             </ShowPasswordContainer>
-            <LoginButton>Login</LoginButton>
+            <LoginButton type="submit">Login</LoginButton>
             <ErrorMessage>{errorMessage}</ErrorMessage>
           </InputContainer>
         </DetailsContainer>

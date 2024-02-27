@@ -1,12 +1,14 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {formatDistanceToNow} from 'date-fns'
+import {FaFire} from 'react-icons/fa'
 import Loader from 'react-loader-spinner'
+import {Link} from 'react-router-dom'
 import DarkThemeContext from '../../context/DarkThemeContext'
 import Header from '../Header'
 import SideBar from '../SideBar'
+
 import {
-  TrendingContainer,
   TrendingHeading,
   TrendVideosContainer,
   FailureContainerImage,
@@ -24,6 +26,8 @@ import {
   ViewsAndUpdatedTime,
   ViewsPara,
   DatePara,
+  TrendingWithIcon,
+  IconHolder,
 } from './styledComponents'
 
 const apiConstants = {
@@ -127,26 +131,37 @@ class TrendingComponent extends Component {
           return (
             <TrendVideoArrangeInColumn>
               {trendingArrayWithUpdatedCase.map(eachItem => (
-                <TrendingVideoArrangeInRow>
-                  <TrendImg src={eachItem.thumbnailUrl} />
-                  <ProfileAndDetailsContainer>
-                    <ImageOfTheIndividual src={eachItem.profileImageUrl} />
-                    <TrendingDataArrangeInColumn>
-                      <TrendTitle changeTrendTitleColor={isDark}>
-                        {eachItem.title}
-                      </TrendTitle>
-                      <TrendCompanyName>{eachItem.name}</TrendCompanyName>
-                      <ViewsAndUpdatedTime>
-                        <ViewsPara countColor={isDark}>
-                          {eachItem.viewCount}
-                        </ViewsPara>
-                        <DatePara dateColor={isDark}>
-                          {eachItem.publishedAt}
-                        </DatePara>
-                      </ViewsAndUpdatedTime>
-                    </TrendingDataArrangeInColumn>
-                  </ProfileAndDetailsContainer>
-                </TrendingVideoArrangeInRow>
+                <Link
+                  to={`/videos/${eachItem.id}`}
+                  className="adjustBackground"
+                >
+                  <TrendingVideoArrangeInRow>
+                    <TrendImg
+                      src={eachItem.thumbnailUrl}
+                      alt="video thumbnail"
+                    />
+                    <ProfileAndDetailsContainer>
+                      <ImageOfTheIndividual
+                        src={eachItem.profileImageUrl}
+                        alt="channel logo"
+                      />
+                      <TrendingDataArrangeInColumn>
+                        <TrendTitle changeTrendTitleColor={isDark}>
+                          {eachItem.title}
+                        </TrendTitle>
+                        <TrendCompanyName>{eachItem.name}</TrendCompanyName>
+                        <ViewsAndUpdatedTime>
+                          <ViewsPara countColor={isDark}>
+                            {eachItem.viewCount}
+                          </ViewsPara>
+                          <DatePara dateColor={isDark}>
+                            {eachItem.publishedAt}
+                          </DatePara>
+                        </ViewsAndUpdatedTime>
+                      </TrendingDataArrangeInColumn>
+                    </ProfileAndDetailsContainer>
+                  </TrendingVideoArrangeInRow>
+                </Link>
               ))}
             </TrendVideoArrangeInColumn>
           )
@@ -159,19 +174,28 @@ class TrendingComponent extends Component {
     return (
       <>
         <Header />
+        <SideBar />
         <DarkThemeContext.Consumer>
           {value => {
             const {isDark} = value
+            const trendHeadingColor = isDark ? 'white' : 'black'
+
             return (
-              <TrendingContainer data-testid="trending">
-                <SideBar />
-                <TrendVideosContainer trendBackgroundColor={isDark}>
-                  <TrendingHeading trendingHeading={isDark}>
+              <TrendVideosContainer
+                trendBackgroundColor={isDark}
+                data-testid="trending"
+              >
+                <TrendingWithIcon>
+                  <IconHolder>
+                    <FaFire size={35} color="#ff0000" />
+                  </IconHolder>
+                  <TrendingHeading trendColor={trendHeadingColor}>
                     Trending
                   </TrendingHeading>
-                  {this.renderAllProducts()}
-                </TrendVideosContainer>
-              </TrendingContainer>
+                </TrendingWithIcon>
+
+                {this.renderAllProducts()}
+              </TrendVideosContainer>
             )
           }}
         </DarkThemeContext.Consumer>

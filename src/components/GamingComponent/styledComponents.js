@@ -1,17 +1,15 @@
 import styled from 'styled-components'
 
-export const GameContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
 export const GameVideosContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
   min-height: 90vh;
-  background-color: ${props => (props.gameBgColor ? 'black' : '#f1f1f1')};
-  @media screen and (max-width: 768px) {
+  margin-left: 20%;
+  background-color: ${props => (props.gameBgColor ? '#0f0f0f ' : '#f9f9f9 ')};
+  @media screen and (max-width: 767px) {
     width: 100%;
+    margin-left: 0px;
   }
 `
 export const GamingHeading = styled.h1`
@@ -81,4 +79,14 @@ export const RetryGameButton = styled.button`
   border: none;
   outline: none;
   cursor: pointer;
+`
+export const GamingWithIcon = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const GameIconHolder = styled.div`
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
 `

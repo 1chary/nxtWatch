@@ -1,15 +1,21 @@
 import {Component} from 'react'
 import {BsSearch} from 'react-icons/bs'
+import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import {formatDistanceToNow} from 'date-fns'
 import Loader from 'react-loader-spinner'
+import {IoIosClose} from 'react-icons/io'
 import DarkThemeContext from '../../context/DarkThemeContext'
+
 import Header from '../Header'
 import SideBar from '../SideBar'
 
 import {
-  HomeContainer,
   VideosContainer,
+  BannerContainer,
+  BannerLeft,
+  HomeNxtWatch,
+  BuyNxtWatch,
   SearchContainer,
   HomeElementButton,
   SearchInputElement,
@@ -30,6 +36,9 @@ import {
   Oops,
   TroublePara,
   RetryButton,
+  GetItNow,
+  BannerRight,
+  CloseButton,
 } from './styledComponents'
 import './index.css'
 
@@ -40,7 +49,7 @@ const apiConstants = {
 }
 
 class HomeComponent extends Component {
-  state = {arrayWithUpdatedCase: [], apiStatus: ''}
+  state = {arrayWithUpdatedCase: [], apiStatus: '', bannerDisplay: 'flex'}
 
   componentDidMount() {
     this.getVideos()
@@ -48,6 +57,7 @@ class HomeComponent extends Component {
 
   getVideos = async () => {
     this.setState({apiStatus: apiConstants.loading})
+    this.setState({bannerDisplay: 'flex'})
     const token = Cookies.get('jwt_token')
     const url = 'https://apis.ccbp.in/videos/all?search='
     const options = {
@@ -88,32 +98,37 @@ class HomeComponent extends Component {
             <UnorderedList>
               {arrayWithUpdatedCase.map(eachItem => (
                 <ListElement key={eachItem.id}>
-                  <HomeElementButton>
-                    <ImageOfDisplay
-                      src={eachItem.thumbnailUrl}
-                      alt="video thumbnail"
-                    />
-                  </HomeElementButton>
-                  <DetailsOfTheVideo>
-                    <ProfileImageContainer
-                      src={eachItem.profileImageUrl}
-                      alt="channel logo"
-                    />
-                    <NameAndLeagueContainer>
-                      <TitleParagraph paraColor={isDark}>
-                        {eachItem.title}
-                      </TitleParagraph>
-                      <ChannelName>{eachItem.name}</ChannelName>
-                      <ViewsAndUpdatedTime>
-                        <ViewsPara countColor={isDark}>
-                          {eachItem.viewCount}
-                        </ViewsPara>
-                        <DatePara dateColor={isDark}>
-                          {eachItem.publishedAt}
-                        </DatePara>
-                      </ViewsAndUpdatedTime>
-                    </NameAndLeagueContainer>
-                  </DetailsOfTheVideo>
+                  <Link
+                    to={`/videos/${eachItem.id}`}
+                    className="adjustBackground"
+                  >
+                    <HomeElementButton>
+                      <ImageOfDisplay
+                        src={eachItem.thumbnailUrl}
+                        alt="video thumbnail"
+                      />
+                    </HomeElementButton>
+                    <DetailsOfTheVideo>
+                      <ProfileImageContainer
+                        src={eachItem.profileImageUrl}
+                        alt="channel logo"
+                      />
+                      <NameAndLeagueContainer>
+                        <TitleParagraph paraColor={isDark}>
+                          {eachItem.title}
+                        </TitleParagraph>
+                        <ChannelName>{eachItem.name}</ChannelName>
+                        <ViewsAndUpdatedTime>
+                          <ViewsPara countColor={isDark}>
+                            {eachItem.viewCount}
+                          </ViewsPara>
+                          <DatePara dateColor={isDark}>
+                            {eachItem.publishedAt}
+                          </DatePara>
+                        </ViewsAndUpdatedTime>
+                      </NameAndLeagueContainer>
+                    </DetailsOfTheVideo>
+                  </Link>
                 </ListElement>
               ))}
             </UnorderedList>
@@ -169,28 +184,53 @@ class HomeComponent extends Component {
     }
   }
 
+  remove = () => {
+    this.setState({bannerDisplay: 'none'})
+  }
+
   render() {
     return (
       <>
         <Header />
+        <SideBar />
         <DarkThemeContext.Consumer>
           {value => {
             const {isDark} = value
+            const {bannerDisplay} = this.state
+            const display = bannerDisplay === 'flex' ? 'flex' : 'none'
             return (
-              <HomeContainer>
-                <SideBar />
-                <VideosContainer bgColor={isDark} data-testid="home">
-                  <SearchContainer color={isDark}>
-                    <SearchInputElement type="search" bgColor={isDark} />
-                    <SearchIconContainer>
-                      <SearchButton data-testid="searchButton">
-                        <BsSearch />
-                      </SearchButton>
-                    </SearchIconContainer>
-                  </SearchContainer>
-                  {this.renderAllProducts()}
-                </VideosContainer>
-              </HomeContainer>
+              <VideosContainer bgColor={isDark} data-testid="home">
+                <BannerContainer data-testid="banner" display={display}>
+                  <BannerLeft>
+                    <HomeNxtWatch
+                      src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                      alt="nxt watch logo"
+                    />
+                    <BuyNxtWatch>
+                      Buy Nxt Watch Premium prepaid plans with UPI
+                    </BuyNxtWatch>
+                    <GetItNow>GET IT NOW</GetItNow>
+                  </BannerLeft>
+                  <BannerRight>
+                    <CloseButton
+                      data-testid="close"
+                      onClick={this.remove}
+                      type="button"
+                    >
+                      <IoIosClose size={25} />
+                    </CloseButton>
+                  </BannerRight>
+                </BannerContainer>
+                <SearchContainer color={isDark}>
+                  <SearchInputElement type="search" bgColor={isDark} />
+                  <SearchIconContainer>
+                    <SearchButton data-testid="searchButton">
+                      <BsSearch />
+                    </SearchButton>
+                  </SearchIconContainer>
+                </SearchContainer>
+                {this.renderAllProducts()}
+              </VideosContainer>
             )
           }}
         </DarkThemeContext.Consumer>

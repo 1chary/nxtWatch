@@ -1,25 +1,23 @@
 import styled from 'styled-components'
 
-export const TrendingContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
 export const TrendVideosContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 80%;
   min-height: 90vh;
   padding-left: 10px;
+  margin-left: 20%;
   background-color: ${props =>
-    props.trendBackgroundColor ? 'black' : '#f1f1f1'};
+    props.trendBackgroundColor ? '#0f0f0f ' : '#f9f9f9 '};
   @media screen and (max-width: 767px) {
     width: 100%;
+    margin-left: 0px;
   }
 `
 
 export const TrendingHeading = styled.h1`
-  color: ${props => (props.trendingHeading ? 'Yellow' : 'black')}
-  font-size: 32px;
+  color: ${props => props.trendColor}
+  font-size: 30px;
 `
 
 export const FailureContainerImage = styled.img`
@@ -78,12 +76,12 @@ export const TrendingDataArrangeInColumn = styled.div`
   padding-left: 15px;
   padding-top: 10px;
 `
-export const TrendTitle = styled.h1`
-  color: ${props => (props.changeTrendTitleColor ? 'white' : 'black')}
-  font-size: 26px;
+export const TrendTitle = styled.p`
+  font-size: 32px;
   @media screen and (max-width: 767px) {
-      font-size: 18px;
+    font-size: 26px;
   }
+  color: ${props => (props.changeTrendTitleColor ? 'white' : 'black')};
 `
 export const TrendCompanyName = styled.p`
   color: #7e858e;
@@ -114,4 +112,15 @@ export const ImageOfTheIndividual = styled.img`
   @media screen and (min-width: 768px) {
     display: none;
   }
+`
+
+export const TrendingWithIcon = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const IconHolder = styled.div`
+  height: 40px;
+  width: 40px;
+  border-radius; 20px;
 `

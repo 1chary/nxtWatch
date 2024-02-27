@@ -1,11 +1,14 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
+import {SiYoutubegaming} from 'react-icons/si'
 import DarkThemeContext from '../../context/DarkThemeContext'
+
 import Header from '../Header'
 import SideBar from '../SideBar'
+import './index.css'
 import {
-  GameContainer,
   GameVideosContainer,
   GamingHeading,
   GameUnOrderedList,
@@ -18,6 +21,8 @@ import {
   GameOops,
   GameTroublePara,
   RetryGameButton,
+  GamingWithIcon,
+  GameIconHolder,
 } from './styledComponents'
 
 const apiConstants = {
@@ -71,16 +76,21 @@ class GamingComponent extends Component {
             <GameUnOrderedList>
               {gameVideos.map(eachItem => (
                 <ListGameElement key={eachItem.id}>
-                  <GameImage
-                    src={eachItem.thumbnailUrl}
-                    alt="video thumbnail"
-                  />
-                  <GameTitleHeading gameTitle={isDark}>
-                    {eachItem.title}
-                  </GameTitleHeading>
-                  <PeopleGameViews viewsColor={isDark}>
-                    {eachItem.viewCount} Watching Worldwide
-                  </PeopleGameViews>
+                  <Link
+                    to={`/videos/${eachItem.id}`}
+                    className="adjustBackground"
+                  >
+                    <GameImage
+                      src={eachItem.thumbnailUrl}
+                      alt="video thumbnail"
+                    />
+                    <GameTitleHeading gameTitle={isDark}>
+                      {eachItem.title}
+                    </GameTitleHeading>
+                    <PeopleGameViews viewsColor={isDark}>
+                      {eachItem.viewCount} Watching Worldwide
+                    </PeopleGameViews>
+                  </Link>
                 </ListGameElement>
               ))}
             </GameUnOrderedList>
@@ -103,7 +113,7 @@ class GamingComponent extends Component {
           : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
         return (
           <GameFailureContainer>
-            <GameFailureImage src={GameFailure} />
+            <GameFailureImage src={GameFailure} alt="failure view" />
             <GameOops oopsHeading={isDark}>Oops! Something Went Wrong</GameOops>
             <GameTroublePara>
               We are having some trouble to complete your request.Please try
@@ -140,17 +150,21 @@ class GamingComponent extends Component {
     return (
       <>
         <Header />
+        <SideBar />
         <DarkThemeContext.Consumer>
           {value => {
             const {isDark} = value
             return (
-              <GameContainer data-testid="gaming">
-                <SideBar />
-                <GameVideosContainer gameBgColor={isDark}>
+              <GameVideosContainer gameBgColor={isDark} data-testid="gaming">
+                <GamingWithIcon>
+                  <GameIconHolder>
+                    <SiYoutubegaming size={35} color="#ff0000" />
+                  </GameIconHolder>
                   <GamingHeading gameText={isDark}>Gaming</GamingHeading>
-                  {this.renderAllProducts()}
-                </GameVideosContainer>
-              </GameContainer>
+                </GamingWithIcon>
+
+                {this.renderAllProducts()}
+              </GameVideosContainer>
             )
           }}
         </DarkThemeContext.Consumer>

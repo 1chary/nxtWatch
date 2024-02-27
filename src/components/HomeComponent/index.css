@@ -3,3 +3,8 @@
   width: 100%;
   background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
 }
+
+.adjustBackground {
+  width: 100%;
+  text-decoration: none;
+}

@@ -8,14 +8,21 @@ export const HeaderContainer = styled.div`
   height: 10vh;
   width: 100%;
   padding: 20px;
+  position: fixed;
 `
 export const Logo = styled.img`
   height: 30px;
-  width: 30%;
+  width: 50%;
   @media screen and (min-width: 768px) {
-    width: 15%;
+    width: 25%;
   }
 `
+export const ButtonForLogo = styled.button`
+  background-color: transparent;
+  width: 120px;
+  height: 30px;
+`
+
 export const OptionsContainer = styled.div`
   display: flex;
   align-items: center;
@@ -44,6 +51,7 @@ export const LogOutButton = styled.button`
   color: ${props => (props.buttonStyle ? 'white' : '#3b82f6')};
   background-color: transparent;
   margin-left: 15px;
+  cursor: pointer;
   @media screen and (max-width: 767px) {
     display: none;
   }
@@ -82,4 +90,41 @@ export const LogButtonForSmallDevices = styled.button`
   outline: none;
   cursor: pointer;
   background-color: ${props => (props.bgColorForLogOut ? 'black' : 'white')};
+`
+export const ButtonContainerForLogOut = styled.button`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => (props.popUpColor ? 'black' : 'white')};
+  width: 30%;
+  height: 150px;
+  @media screen and (max-width: 767px) {
+    width: 70%;
+  }
+`
+export const AreYouSure = styled.p`
+  color: grey;
+`
+export const ButtonContainer = styled.div`
+  display: flex;
+`
+export const CancelButton = styled.div`
+  border: 1px solid grey;
+  color: grey;
+  height: 30px;
+  width: 120px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 22px;
+`
+export const ConfirmButton = styled.button`
+  background-color: #3b82f6;
+  height: 30px;
+  width: 120px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: white;
+  font-size: 22px;
 `
