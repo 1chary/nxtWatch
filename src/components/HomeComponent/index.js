@@ -39,8 +39,13 @@ import {
   GetItNow,
   BannerRight,
   CloseButton,
+  RandomSearch,
+  RandomSearchImage,
+  RandomSearchHeading,
+  RandomSearchPara,
 } from './styledComponents'
 import './index.css'
+import {RetryGameButton} from '../GamingComponent/styledComponents'
 
 const apiConstants = {
   loading: 'LOADING',
@@ -87,51 +92,71 @@ class HomeComponent extends Component {
     }
   }
 
+  getAllVideos = () => {
+    this.getVideos()
+  }
+
   renderSuccess = () => {
     const {arrayWithUpdatedCase} = this.state
     return (
       <DarkThemeContext.Consumer>
         {value => {
           const {isDark} = value
-
+          if (arrayWithUpdatedCase !== 0) {
+            return (
+              <UnorderedList>
+                {arrayWithUpdatedCase.map(eachItem => (
+                  <ListElement key={eachItem.id}>
+                    <Link
+                      to={`/videos/${eachItem.id}`}
+                      className="adjustBackground"
+                    >
+                      <HomeElementButton>
+                        <ImageOfDisplay
+                          src={eachItem.thumbnailUrl}
+                          alt="video thumbnail"
+                        />
+                      </HomeElementButton>
+                      <DetailsOfTheVideo>
+                        <ProfileImageContainer
+                          src={eachItem.profileImageUrl}
+                          alt="channel logo"
+                        />
+                        <NameAndLeagueContainer>
+                          <TitleParagraph paraColor={isDark}>
+                            {eachItem.title}
+                          </TitleParagraph>
+                          <ChannelName>{eachItem.name}</ChannelName>
+                          <ViewsAndUpdatedTime>
+                            <ViewsPara countColor={isDark}>
+                              {eachItem.viewCount}
+                            </ViewsPara>
+                            <DatePara dateColor={isDark}>
+                              {eachItem.publishedAt}
+                            </DatePara>
+                          </ViewsAndUpdatedTime>
+                        </NameAndLeagueContainer>
+                      </DetailsOfTheVideo>
+                    </Link>
+                  </ListElement>
+                ))}
+              </UnorderedList>
+            )
+          }
           return (
-            <UnorderedList>
-              {arrayWithUpdatedCase.map(eachItem => (
-                <ListElement key={eachItem.id}>
-                  <Link
-                    to={`/videos/${eachItem.id}`}
-                    className="adjustBackground"
-                  >
-                    <HomeElementButton>
-                      <ImageOfDisplay
-                        src={eachItem.thumbnailUrl}
-                        alt="video thumbnail"
-                      />
-                    </HomeElementButton>
-                    <DetailsOfTheVideo>
-                      <ProfileImageContainer
-                        src={eachItem.profileImageUrl}
-                        alt="channel logo"
-                      />
-                      <NameAndLeagueContainer>
-                        <TitleParagraph paraColor={isDark}>
-                          {eachItem.title}
-                        </TitleParagraph>
-                        <ChannelName>{eachItem.name}</ChannelName>
-                        <ViewsAndUpdatedTime>
-                          <ViewsPara countColor={isDark}>
-                            {eachItem.viewCount}
-                          </ViewsPara>
-                          <DatePara dateColor={isDark}>
-                            {eachItem.publishedAt}
-                          </DatePara>
-                        </ViewsAndUpdatedTime>
-                      </NameAndLeagueContainer>
-                    </DetailsOfTheVideo>
-                  </Link>
-                </ListElement>
-              ))}
-            </UnorderedList>
+            <RandomSearch>
+              <RandomSearchImage
+                src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+                alt="no videos"
+              />
+              <RandomSearchHeading>No Search results found</RandomSearchHeading>
+              <RandomSearchPara>
+                Try different key words or remove search filter
+              </RandomSearchPara>
+              <RetryGameButton onClick={this.getAllVideos}>
+                Retry
+              </RetryGameButton>
+            </RandomSearch>
           )
         }}
       </DarkThemeContext.Consumer>
@@ -222,7 +247,11 @@ class HomeComponent extends Component {
                   </BannerRight>
                 </BannerContainer>
                 <SearchContainer color={isDark}>
-                  <SearchInputElement type="search" bgColor={isDark} />
+                  <SearchInputElement
+                    type="search"
+                    placeholder="Search"
+                    bgColor={isDark}
+                  />
                   <SearchIconContainer>
                     <SearchButton data-testid="searchButton">
                       <BsSearch />

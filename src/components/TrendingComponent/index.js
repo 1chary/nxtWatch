@@ -135,7 +135,7 @@ class TrendingComponent extends Component {
                   to={`/videos/${eachItem.id}`}
                   className="adjustBackground"
                 >
-                  <TrendingVideoArrangeInRow>
+                  <TrendingVideoArrangeInRow key={eachItem.id}>
                     <TrendImg
                       src={eachItem.thumbnailUrl}
                       alt="video thumbnail"

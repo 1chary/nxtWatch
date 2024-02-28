@@ -26,7 +26,6 @@ import {
 const PlayerVideo = props => {
   const {detailedVideo, like, disLike, clickedOnLike, clickedOnDisLike} = props
   const {
-    id,
     publishedAt,
     title,
     viewCount,

@@ -52,7 +52,7 @@ export const InputElement = styled.input`
 export const LoginButton = styled.button`
   height: 40px;
   background-color: #3b82f6;
-  color: white;
+  color: #ffffff;
   border: none;
   outline: none;
   margin-top: 5px;
@@ -68,7 +68,7 @@ export const CheckBox = styled.input`
   height: 15px;
   width: 15px;
 `
-export const ShowPassPara = styled.p`
+export const ShowPassPara = styled.label`
   color: black;
   font-size: 18px;
 `

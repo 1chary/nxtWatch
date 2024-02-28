@@ -25,9 +25,6 @@ export const BannerContainer = styled.div`
   display: flex;
   justify-content: space-between;
   background-size: cover;
-  @media screen and (max-width: 767px) {
-    display: none;
-  }
 `
 export const BannerLeft = styled.div`
   display: flex;
@@ -37,7 +34,7 @@ export const HomeNxtWatch = styled.img`
   height: 50px;
   width: 250px;
 `
-export const BuyNxtWatch = styled.h1`
+export const BuyNxtWatch = styled.p`
   font-size: 30px;
   color: grey;
 `
@@ -199,4 +196,25 @@ export const SubTitleContainer = styled.div`
 
 export const TitleHolder = styled.div`
   display: flex;
+`
+
+export const RandomSearch = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const RandomSearchImage = styled.img`
+  height: 150px;
+  width: 50%;
+  @media screen and (max-width: 767px) {
+    width: 80%;
+  }
+`
+export const RandomSearchHeading = styled.h1`
+  font-size: 30px;
+`
+
+export const RandomSearchPara = styled.p`
+  font-size: 24px;
 `

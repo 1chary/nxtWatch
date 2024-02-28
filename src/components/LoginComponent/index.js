@@ -45,6 +45,7 @@ class LoginComponent extends Component {
 
   renderPassword = () => {
     const {showPassword, password} = this.state
+    const typeOfPassword = showPassword ? 'password' : 'text'
     return (
       <>
         <LabelElement htmlFor="password">PASSWORD</LabelElement>
@@ -53,7 +54,7 @@ class LoginComponent extends Component {
           value={password}
           onChange={this.changePassword}
           placeholder="Password"
-          type="password"
+          type={typeOfPassword}
         />
       </>
     )
@@ -110,8 +111,12 @@ class LoginComponent extends Component {
             {this.renderUsername()}
             {this.renderPassword()}
             <ShowPasswordContainer>
-              <CheckBox type="checkbox" onClick={this.showPassword} />
-              <ShowPassPara>Show Password</ShowPassPara>
+              <CheckBox
+                id="showPassword"
+                type="checkbox"
+                onClick={this.showPassword}
+              />
+              <ShowPassPara htmlFor="showPassword">Show Password</ShowPassPara>
             </ShowPasswordContainer>
             <LoginButton type="submit">Login</LoginButton>
             <ErrorMessage>{errorMessage}</ErrorMessage>

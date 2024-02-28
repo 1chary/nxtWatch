@@ -40,12 +40,6 @@ const Header = props => (
         history.replace('/login')
       }
 
-      const LogOutForLargeDevices = () => {
-        const {history} = props
-        Cookies.remove('jwt_token')
-        history.replace('/login')
-      }
-
       const imageUrl = isDark
         ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
         : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
@@ -72,6 +66,34 @@ const Header = props => (
               src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
               alt="profile"
             />
+            <Popup
+              modal
+              trigger={
+                <LogOutButton buttonStyle={isDark} type="button">
+                  Logout
+                </LogOutButton>
+              }
+              className="popup-content"
+            >
+              {close => (
+                <ButtonContainerForLogOut popUpColor={isDark}>
+                  <AreYouSure>Are you sure you want to logout?</AreYouSure>
+                  <ButtonContainer>
+                    <CancelButton
+                      type="button"
+                      className="trigger-button"
+                      data-testid="closeButton"
+                      onClick={() => close()}
+                    >
+                      Cancel
+                    </CancelButton>
+                    <ConfirmButton onClick={logOut} type="button">
+                      Confirm
+                    </ConfirmButton>
+                  </ButtonContainer>
+                </ButtonContainerForLogOut>
+              )}
+            </Popup>
 
             <PopupContainer popBgColor={isDark}>
               <Popup
@@ -80,6 +102,7 @@ const Header = props => (
                     <FaBars className="hamBurgerMenu" aria-label="20" />
                   </HmmBurgerIcon>
                 }
+                className="popup-content"
               >
                 <UnOrderedSideBar>
                   <Link to="/" className="anchorLink">
@@ -127,37 +150,6 @@ const Header = props => (
                       Cancel
                     </CancelButton>
                     <ConfirmButton onClick={logOut} type="button">
-                      Confirm
-                    </ConfirmButton>
-                  </ButtonContainer>
-                </ButtonContainerForLogOut>
-              )}
-            </Popup>
-            <Popup
-              modal
-              trigger={
-                <LogOutButton buttonStyle={isDark} type="button">
-                  Logout
-                </LogOutButton>
-              }
-              className="popup-content"
-            >
-              {close => (
-                <ButtonContainerForLogOut popUpColor={isDark}>
-                  <AreYouSure>Are you sure you want to logout?</AreYouSure>
-                  <ButtonContainer>
-                    <CancelButton
-                      type="button"
-                      className="trigger-button"
-                      data-testid="closeButton"
-                      onClick={() => close()}
-                    >
-                      Cancel
-                    </CancelButton>
-                    <ConfirmButton
-                      onClick={LogOutForLargeDevices}
-                      type="button"
-                    >
                       Confirm
                     </ConfirmButton>
                   </ButtonContainer>
